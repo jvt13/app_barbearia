@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APP Barbearia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Teko:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <header class="topbar shell">
+        <div class="brand">
+            <p class="brand-mini">Sistema de Gestao</p>
+            <h1>APP BARBEARIA</h1>
+        </div>
+        <div class="topbar-actions">
+            <span id="serverStatus" class="pill">API...</span>
+            <span id="authStatus" class="pill">Nao autenticado</span>
+            <button id="openAuthBtn" class="btn ghost">Entrar</button>
+            <button id="logoutBtn" class="btn ghost hidden">Sair</button>
+        </div>
+    </header>
+
+    <main class="shell">
+        <nav class="menu" id="catalogTabs">
+            <button class="menu-item active" data-tab="services">Servicos</button>
+            <button class="menu-item" data-tab="professionals">Profissionais</button>
+            <button class="menu-item" data-tab="products">Produtos</button>
+            <button class="menu-item" data-tab="packages">Pacotes</button>
+        </nav>
+
+        <section id="tab-services" class="section-card tab-content active">
+            <div class="section-head">
+                <h2>Servicos</h2>
+                <button id="refreshServicesBtn" class="btn ghost">Atualizar</button>
+            </div>
+            <input id="serviceSearch" class="search-input" type="text" placeholder="Pesquisar servico">
+            <div id="servicesList" class="service-list"></div>
+        </section>
+
+        <section id="tab-professionals" class="section-card tab-content">
+            <div class="section-head">
+                <h2>Profissionais</h2>
+                <button id="refreshProfessionalsBtn" class="btn ghost">Atualizar</button>
+            </div>
+            <input id="professionalSearch" class="search-input" type="text" placeholder="Pesquisar profissional">
+            <div id="professionalsList" class="service-list"></div>
+        </section>
+
+        <section id="tab-products" class="section-card tab-content">
+            <div class="section-head">
+                <h2>Produtos</h2>
+                <button id="refreshProductsBtn" class="btn ghost">Atualizar</button>
+            </div>
+            <input id="productSearch" class="search-input" type="text" placeholder="Pesquisar produto">
+            <div id="productsList" class="service-list"></div>
+        </section>
+
+        <section id="tab-packages" class="section-card tab-content">
+            <div class="section-head">
+                <h2>Pacotes</h2>
+                <button id="refreshPackagesBtn" class="btn ghost">Atualizar</button>
+            </div>
+            <input id="packageSearch" class="search-input" type="text" placeholder="Pesquisar pacote">
+            <div id="packagesList" class="service-list"></div>
+        </section>
+
+        <section id="myAppointmentsSection" class="section-card hidden">
+            <div class="section-head">
+                <h2>Meus Agendamentos</h2>
+                <button id="refreshAppointmentsBtn" class="btn ghost">Atualizar</button>
+            </div>
+            <div id="appointmentsList" class="service-list"></div>
+        </section>
+
+        <section id="opsSection" class="section-card hidden">
+            <div class="section-head">
+                <h2>Painel Operacional</h2>
+            </div>
+
+            <div id="opsForm-services" class="ops-form-block">
+                <h3 class="subhead">Cadastrar Servico</h3>
+                <form id="serviceForm" class="inline-form">
+                    <input id="serviceName" type="text" placeholder="Nome do servico" required>
+                    <input id="servicePrice" type="number" step="0.01" placeholder="Preco" required>
+                    <input id="serviceDuration" type="number" placeholder="Duracao (min)" required>
+                    <input id="serviceDescription" type="text" placeholder="Descricao">
+                    <button class="btn primary" type="submit">Salvar servico</button>
+                </form>
+            </div>
+
+            <div id="opsForm-professionals" class="ops-form-block hidden">
+                <h3 class="subhead">Cadastrar Profissional</h3>
+                <form id="professionalForm" class="inline-form">
+                    <input id="professionalName" type="text" placeholder="Nome" required>
+                    <input id="professionalSpecialty" type="text" placeholder="Especialidade" required>
+                    <input id="professionalAvatarUrl" type="text" placeholder="Avatar URL">
+                    <input id="professionalBio" type="text" placeholder="Bio">
+                    <button class="btn primary" type="submit">Salvar profissional</button>
+                </form>
+            </div>
+
+            <div id="opsForm-products" class="ops-form-block hidden">
+                <h3 class="subhead">Cadastrar Produto</h3>
+                <form id="productForm" class="inline-form">
+                    <input id="productName" type="text" placeholder="Nome" required>
+                    <input id="productPrice" type="number" step="0.01" placeholder="Preco" required>
+                    <input id="productStock" type="number" placeholder="Estoque" required>
+                    <input id="productImageUrl" type="text" placeholder="Imagem URL">
+                    <input id="productDescription" type="text" placeholder="Descricao">
+                    <button class="btn primary" type="submit">Salvar produto</button>
+                </form>
+            </div>
+
+            <div id="opsForm-packages" class="ops-form-block hidden">
+                <h3 class="subhead">Cadastrar Pacote</h3>
+                <form id="packageForm" class="inline-form">
+                    <input id="packageName" type="text" placeholder="Nome" required>
+                    <input id="packagePrice" type="number" step="0.01" placeholder="Preco" required>
+                    <input id="packageDuration" type="number" placeholder="Duracao (min)" required>
+                    <input id="packageDescription" type="text" placeholder="Descricao">
+                    <button class="btn primary" type="submit">Salvar pacote</button>
+                </form>
+            </div>
+
+            <h3 class="subhead">Agendamentos pendentes</h3>
+            <div id="pendingAppointmentsList" class="service-list"></div>
+        </section>
+    </main>
+
+    <div id="authModal" class="modal hidden">
+        <div class="modal-card">
+            <button id="closeAuthBtn" class="btn ghost close-btn">Fechar</button>
+            <h2>Acessar sistema</h2>
+            <div class="auth-grid">
+                <form id="loginForm" class="auth-form">
+                    <h3>Entrar</h3>
+                    <input id="loginEmail" type="email" placeholder="E-mail" required>
+                    <input id="loginPassword" type="password" placeholder="Senha" required>
+                    <button class="btn primary" type="submit">Login</button>
+                </form>
+                <form id="registerForm" class="auth-form">
+                    <h3>Cadastrar cliente</h3>
+                    <input id="registerName" type="text" placeholder="Nome" required>
+                    <input id="registerEmail" type="email" placeholder="E-mail" required>
+                    <input id="registerPassword" type="password" placeholder="Senha" required>
+                    <button class="btn primary" type="submit">Criar conta</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="bookingModal" class="modal hidden">
+        <div class="modal-card booking-card">
+            <button id="closeBookingBtn" class="btn ghost close-btn">Fechar</button>
+            <h2>Agendar servico</h2>
+            <p id="bookingServiceName" class="booking-service"></p>
+            <form id="bookingForm" class="auth-form">
+                <input id="bookingDateTime" type="datetime-local" required>
+                <button class="btn primary" type="submit">Confirmar agendamento</button>
+            </form>
+            <p class="booking-note">Novos agendamentos entram com status pendente.</p>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <script src="./app.js"></script>
+</body>
+</html>
